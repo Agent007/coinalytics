@@ -1,0 +1,27 @@
+zookeeper:
+  image: jplock/zookeeper
+  hostname: zookeeper
+  ports:
+    - "2181:2181"
+
+kafka:
+  image: wurstmeister/kafka:0.8.2.1
+  hostname: kafka
+  ports:
+    - "9092:9092"
+  links:
+    - zookeeper:zk
+  environment:
+    KAFKA_ADVERTISED_HOST_NAME: kafka
+    KAFKA_ADVERTISED_PORT: 9092
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+
+producer:
+  image: agentoo7/bitcoin-transaction-producer
+  hostname: producer
+  links:
+    - zookeeper:zk
+    - kafka
+  environment:
+    ZOOKEEPER_HOSTNAME: zookeeper
