@@ -25,3 +25,10 @@ producer:
     - kafka
   environment:
     ZOOKEEPER_HOSTNAME: zookeeper
+
+spark:
+  image: gettyimages/spark
+  hostname: spark
+  command: run-example streaming.DirectKafkaWordCount kafka:9092 transactions
+  links:
+    - kafka
