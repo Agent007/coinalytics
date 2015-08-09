@@ -15,5 +15,6 @@ will launch several Docker containers based on the docker-compose.yml configurat
 bash-3.2$ docker-compose up
 ```
 
-You may see errors and, thus, may need to try again a few times due to the nondeterministic nature of the startup order 
-of the individual containers...
+You may see errors and, thus, may need to try again a few times due to the non-deterministic nature of the startup 
+order of the individual containers (TODO Use ZooKeeper for coordination of container startup order, or wait for 
+docker-compose to handle it)...
