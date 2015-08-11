@@ -26,6 +26,7 @@ schemaregistry:
 
 producer:
   image: agentoo7/bitcoin-transaction-producer
+  #build: ../bitcoin-transaction-producer
   hostname: producer
   links:
     - zookeeper:zookeeper
@@ -33,9 +34,18 @@ producer:
   environment:
     ZOOKEEPER_HOSTNAME: zookeeper
 
+# Keep below as a backup to see that the direct Kafka to Spark Streaming connection is indeed running
 spark:
   image: gettyimages/spark
   hostname: spark
   command: run-example streaming.DirectKafkaWordCount kafka:9092 transactions
+  links:
+    - kafka:kafka
+
+sparknotebook:
+  image: andypetrella/spark-notebook:0.6.0-scala-2.10.4-spark-1.4.1-hadoop-2.7.1-with-hive-with-parquet
+  hostname: spark-notebook
+  ports:
+    - "9000:9000"
   links:
     - kafka:kafka
